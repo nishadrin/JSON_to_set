@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Set
 
 
 class DictionaryParser:
@@ -6,22 +6,22 @@ class DictionaryParser:
     Convert dictionary to set.
     """
     def __init__(self) -> None:
-        self.result = list()
+        self.result = set()
 
-    def add_to_set(self, data: Dict) -> List:
+    def add_to_set(self, data: Dict) -> Set:
         """
         Add dictionary to set and return it.
         :param data: Dict
         :return: self.result: List
         """
         self.add_or_next(data)
-        return list(set(self.result))
+        return self.result
 
     def clear_result(self):
-        self.result = list()
+        self.result = set()
 
     def __add_item(self, item) -> None:
-        self.result.append(item)
+        self.result.add(item)
 
     def __add_dict(self, data: Dict) -> None:
         for key, value in data.items():
