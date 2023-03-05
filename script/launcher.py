@@ -2,7 +2,7 @@ import json
 
 import click
 
-from utils.dict_to_set import DictionaryParser
+from utils.dict_to_set import DictionaryToSet
 
 DEFAULT_PATH = './test.json'
 
@@ -13,7 +13,7 @@ def command_line(path):
     # Валидацию path не проводил, но она может быть уместна.
     with open(path, 'r') as json_file:
         data = json.load(json_file)
-    parser = DictionaryParser()
+    parser = DictionaryToSet()
     result = parser.add_to_set(data)
 
     # Для проверки используются эти значения, json лежит в файле test.json
@@ -28,7 +28,7 @@ def command_line(path):
     test_text = sorted(test_text)
     print(result)
     print(test_text)
-    print(sorted(test_text) == sorted(result))
+    print(test_text == result)
 
 
 if __name__ == '__main__':
