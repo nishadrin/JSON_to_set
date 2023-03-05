@@ -5,6 +5,8 @@ class DictionaryParser:
     """
     Convert dictionary to set.
     """
+    __slots__ = ['result']
+
     def __init__(self) -> None:
         self.result = set()
 
