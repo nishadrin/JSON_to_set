@@ -1,14 +1,18 @@
+import sys
 from typing import List, Dict, Set, Union
 
 
 class DictionaryToSet:
     """
     Convert dictionary to set.
+    :param recursion_limit: Optional[int]
+    :return
     """
-    __slots__ = ['data']
+    __slots__ = ['data', 'recursion_limit']
 
-    def __init__(self) -> None:
+    def __init__(self, recursion_limit: int = 1000) -> None:
         self.data = set()
+        self.recursion_limit = recursion_limit
 
     def add_to_set(self, dictionary: Dict) -> Set:
         """
@@ -22,19 +26,19 @@ class DictionaryToSet:
     def clear_data(self) -> None:
         self.data = set()
 
-    def __add_item(self, item: Union[str, int]) -> None:
-        self.data.add(item)
-
-    def __add_dict(self, dictionary: Dict) -> None:
-        for key, value in dictionary.items():
-            self.__add_item(key)
-            self.add_or_next(value)
-
-    def __add_list(self, data: List) -> None:
-        for key in data:
-            self.add_or_next(key)
-
     def add_or_next(self, dictionary: Dict) -> None:
+        """
+        Add dictionary to self.data. Check recursion level.
+        :param dictionary: Dict
+        :return:
+        """
+        try:
+            self.__add_or_next(dictionary)
+        except RecursionError:
+            sys.setrecursionlimit(self.recursion_limit)
+            self.__add_or_next(dictionary)
+
+    def __add_or_next(self, dictionary: Dict) -> None:
         """
         Add dictionary to self.data.
         :param dictionary: Dict
@@ -50,3 +54,15 @@ class DictionaryToSet:
             raise Exception(
                 f'Wrong input data type. Awaited: dict, list, str or int. Get - '
                 f'{type(dictionary)}')
+
+    def __add_item(self, item: Union[str, int]) -> None:
+        self.data.add(item)
+
+    def __add_dict(self, dictionary: Dict) -> None:
+        for key, value in dictionary.items():
+            self.__add_item(key)
+            self.add_or_next(value)
+
+    def __add_list(self, data: List) -> None:
+        for key in data:
+            self.add_or_next(key)
