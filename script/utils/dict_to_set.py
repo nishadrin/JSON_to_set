@@ -10,9 +10,10 @@ class DictionaryToSet:
     """
     __slots__ = ['data', 'recursion_limit']
 
-    def __init__(self, recursion_limit: int = 1000) -> None:
+    def __init__(self, recursion_limit: int = None) -> None:
         self.data = set()
         self.recursion_limit = recursion_limit
+        self.__set_recursion_limit()
 
     def add_to_set(self, dictionary: Dict) -> Set:
         """
@@ -28,18 +29,6 @@ class DictionaryToSet:
 
     def add_or_next(self, dictionary: Dict) -> None:
         """
-        Add dictionary to self.data. Check recursion level.
-        :param dictionary: Dict
-        :return:
-        """
-        try:
-            self.__add_or_next(dictionary)
-        except RecursionError:
-            sys.setrecursionlimit(self.recursion_limit)
-            self.__add_or_next(dictionary)
-
-    def __add_or_next(self, dictionary: Dict) -> None:
-        """
         Add dictionary to self.data.
         :param dictionary: Dict
         :return:
@@ -54,6 +43,10 @@ class DictionaryToSet:
             raise Exception(
                 f'Wrong input data type. Awaited: dict, list, str or int. Get - '
                 f'{type(dictionary)}')
+
+    def __set_recursion_limit(self):
+        if self.recursion_limit is not None:
+            sys.setrecursionlimit(self.recursion_limit)
 
     def __add_item(self, item: Union[str, int]) -> None:
         self.data.add(item)
