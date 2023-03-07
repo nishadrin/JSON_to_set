@@ -17,7 +17,7 @@ class DictionaryToSet:
 
     def add_to_set(self, dictionary: Dict) -> Set:
         """
-        Add dictionary to set and return it.
+        Add dictionary to set self.data.
         :param dictionary: Dict
         :return: self.data: Set
         """
@@ -25,11 +25,15 @@ class DictionaryToSet:
         return self.data
 
     def clear_data(self) -> None:
+        """
+        Set self.data to empty set.
+        :return:
+        """
         self.data = set()
 
     def add_or_next(self, dictionary: Dict) -> None:
         """
-        Add dictionary to self.data.
+        Add dictionary to set self.data.
         :param dictionary: Dict
         :return:
         """
